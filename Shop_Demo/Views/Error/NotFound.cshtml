@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "NotFound";
+}
+
+<div class="page-wrap d-flex flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <span class="display-1 d-block">404</span>
+                <span class="display-4 d-block">Not Found</span>
+                <div class="mb-4 lead">The page you are looking for was not found.</div>
+                @Html.ActionLink("Go Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+                <a href="javascript:history.go(-1)" class="btn btn-secondary">Go Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+

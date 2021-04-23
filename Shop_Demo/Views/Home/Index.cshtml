@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    ViewBag.IP = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.ServerVariables["REMOTE_ADDR"];
+    string ipv6 = IPAddress.Parse(ViewBag.IP).ToString();
+    string ipv4 = IPAddress.Parse(ViewBag.IP).MapToIPv4().ToString(); 
+
+}
+
+
+<div class="jumbotron shadow pl-5 text-light mb-4">
+    @*<img src="~/Images/logo.png" width="100" height="100"/>*@
+
+    <h1>Shop example</h1>
+    <h5>Your IPv6: @ipv6</h5>
+    <h5>Your IPv4: @ipv4</h5>
+</div>
+
+<div class="row container">
+    <div class="col-4 p-0 currencyExchangeRate">
+        <table class="table table-sm table-bordered shadow-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Currency</th>
+                    <th>Buy</th>
+                    <th>Sale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- jQuery generate -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/ExchangeRate.js"></script>
+

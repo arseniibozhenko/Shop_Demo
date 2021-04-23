@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ShopAdoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="GoodId" />
+          </Key>
+          <Property Name="GoodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GoodName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ManufacturerId" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="GoodCount" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufacturerName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="PhotoId" />
+          </Key>
+          <Property Name="PhotoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GoodId" Type="int" />
+          <Property Name="PhotoPath" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberSale" Type="int" Nullable="false" />
+          <Property Name="UserPhone" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="DateSale" Type="date" Nullable="false" />
+          <Property Name="Summa" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SalePos">
+          <Key>
+            <PropertyRef Name="SalePosId" />
+          </Key>
+          <Property Name="SalePosId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleId" Type="int" Nullable="false" />
+          <Property Name="GoodId" Type="int" Nullable="false" />
+          <Property Name="CountGood" Type="int" Nullable="false" />
+          <Property Name="Summa" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Good__CategoryId__15502E78">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Good__Manufactur__145C0A3F">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="0..1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Photo__GoodId__34C8D9D1">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="Photo" Type="Self.Photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Photo">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SalePos__GoodId__1ED998B2">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="SalePos" Type="Self.SalePos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="SalePos">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SalePos__SaleId__1DE57479">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="SalePos" Type="Self.SalePos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="SaleId" />
+            </Principal>
+            <Dependent Role="SalePos">
+              <PropertyRef Name="SaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShopAdoModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photo" EntityType="Self.Photo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalePos" EntityType="Self.SalePos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Good__CategoryId__15502E78" Association="Self.FK__Good__CategoryId__15502E78">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Good__Manufactur__145C0A3F" Association="Self.FK__Good__Manufactur__145C0A3F">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Photo__GoodId__34C8D9D1" Association="Self.FK__Photo__GoodId__34C8D9D1">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Photo" EntitySet="Photo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SalePos__GoodId__1ED998B2" Association="Self.FK__SalePos__GoodId__1ED998B2">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="SalePos" EntitySet="SalePos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SalePos__SaleId__1DE57479" Association="Self.FK__SalePos__SaleId__1DE57479">
+            <End Role="Sale" EntitySet="Sale" />
+            <End Role="SalePos" EntitySet="SalePos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShopAdoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK__Good__CategoryId__15502E78" FromRole="Category" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="GoodId" />
+          </Key>
+          <Property Name="GoodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ManufacturerId" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="GoodCount" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Good__CategoryId__15502E78" FromRole="Good" ToRole="Category" />
+          <NavigationProperty Name="Manufacturer" Relationship="Self.FK__Good__Manufactur__145C0A3F" FromRole="Good" ToRole="Manufacturer" />
+          <NavigationProperty Name="Photo" Relationship="Self.FK__Photo__GoodId__34C8D9D1" FromRole="Good" ToRole="Photo" />
+          <NavigationProperty Name="SalePos" Relationship="Self.FK__SalePos__GoodId__1ED998B2" FromRole="Good" ToRole="SalePos" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK__Good__Manufactur__145C0A3F" FromRole="Manufacturer" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="PhotoId" />
+          </Key>
+          <Property Name="PhotoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodId" Type="Int32" />
+          <Property Name="PhotoPath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK__Photo__GoodId__34C8D9D1" FromRole="Photo" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberSale" Type="Int32" Nullable="false" />
+          <Property Name="UserPhone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="UserEmail" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateSale" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Summa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="SalePos" Relationship="Self.FK__SalePos__SaleId__1DE57479" FromRole="Sale" ToRole="SalePos" />
+        </EntityType>
+        <EntityType Name="SalePos">
+          <Key>
+            <PropertyRef Name="SalePosId" />
+          </Key>
+          <Property Name="SalePosId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleId" Type="Int32" Nullable="false" />
+          <Property Name="GoodId" Type="Int32" Nullable="false" />
+          <Property Name="CountGood" Type="Int32" Nullable="false" />
+          <Property Name="Summa" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK__SalePos__GoodId__1ED998B2" FromRole="SalePos" ToRole="Good" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK__SalePos__SaleId__1DE57479" FromRole="SalePos" ToRole="Sale" />
+        </EntityType>
+        <Association Name="FK__Good__CategoryId__15502E78">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Good__Manufactur__145C0A3F">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="0..1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Photo__GoodId__34C8D9D1">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="Photo" Type="Self.Photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Photo">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SalePos__GoodId__1ED998B2">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="SalePos" Type="Self.SalePos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="SalePos">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SalePos__SaleId__1DE57479">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="SalePos" Type="Self.SalePos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="SaleId" />
+            </Principal>
+            <Dependent Role="SalePos">
+              <PropertyRef Name="SaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShopAdoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Good" EntityType="Self.Good" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" />
+          <EntitySet Name="Photo" EntityType="Self.Photo" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" />
+          <EntitySet Name="SalePos" EntityType="Self.SalePos" />
+          <AssociationSet Name="FK__Good__CategoryId__15502E78" Association="Self.FK__Good__CategoryId__15502E78">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Good__Manufactur__145C0A3F" Association="Self.FK__Good__Manufactur__145C0A3F">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Photo__GoodId__34C8D9D1" Association="Self.FK__Photo__GoodId__34C8D9D1">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Photo" EntitySet="Photo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SalePos__GoodId__1ED998B2" Association="Self.FK__SalePos__GoodId__1ED998B2">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="SalePos" EntitySet="SalePos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SalePos__SaleId__1DE57479" Association="Self.FK__SalePos__SaleId__1DE57479">
+            <End Role="Sale" EntitySet="Sale" />
+            <End Role="SalePos" EntitySet="SalePos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShopAdoModelStoreContainer" CdmEntityContainer="ShopAdoEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="ShopAdoModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Good">
+            <EntityTypeMapping TypeName="ShopAdoModel.Good">
+              <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="GoodName" ColumnName="GoodName" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="GoodCount" ColumnName="GoodCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturer">
+            <EntityTypeMapping TypeName="ShopAdoModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="ManufacturerName" ColumnName="ManufacturerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photo">
+            <EntityTypeMapping TypeName="ShopAdoModel.Photo">
+              <MappingFragment StoreEntitySet="Photo">
+                <ScalarProperty Name="PhotoId" ColumnName="PhotoId" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sale">
+            <EntityTypeMapping TypeName="ShopAdoModel.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+                <ScalarProperty Name="NumberSale" ColumnName="NumberSale" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="DateSale" ColumnName="DateSale" />
+                <ScalarProperty Name="Summa" ColumnName="Summa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalePos">
+            <EntityTypeMapping TypeName="ShopAdoModel.SalePos">
+              <MappingFragment StoreEntitySet="SalePos">
+                <ScalarProperty Name="SalePosId" ColumnName="SalePosId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="CountGood" ColumnName="CountGood" />
+                <ScalarProperty Name="Summa" ColumnName="Summa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

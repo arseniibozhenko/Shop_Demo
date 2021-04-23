@@ -1,0 +1,103 @@
+﻿@using Shop_Demo.Models;
+@model RegisterModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Register - Shop</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Login.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <!-- jQuery and bootstrap-->
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <link href="~/Images/favicon.ico" rel="icon" />
+</head>
+<body>
+    @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-signup" }))
+    {
+        @*@Html.AntiForgeryToken()*@
+
+        <div class="text-center">
+            <img class="mb-4 shadow-sm rounded-circle text-center" src="~/Images/logo.png" alt="" width="75" height="75">
+            <h1 class="h3 mb-3 font-weight-normal text-center">Register</h1>
+        </div>
+        
+
+        if (ViewData.ModelState[""]?.Errors.Count > 0)
+        {
+            @Html.ValidationSummary(true)
+        }
+        <div class="form-row">
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.FirstName, new { @class = "text-left" })
+                @Html.TextBoxFor(u => u.FirstName, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(u => u.FirstName, "", new { @class = "invalid-feedback" })
+            </div>
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.LastName, new { @class = "text-left" })
+                @Html.TextBoxFor(u => u.LastName, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(u => u.LastName, "", new { @class = "invalid-feedback" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.UserName, new { @class = "text-left" })
+                @Html.TextBoxFor(u => u.UserName, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "invalid-feedback" })
+            </div>
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.Email, new { @class = "text-left" })
+                @Html.TextBoxFor(u => u.Email, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(u => u.Email, "", new { @class = "invalid-feedback" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.Password, new { @class = "text-left" })
+                @Html.PasswordFor(u => u.Password, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(u => u.Password, "", new { @class = "invalid-feedback" })
+            </div>
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.PasswordConfirm, new { @class = "text-left" })
+                @Html.PasswordFor(u => u.PasswordConfirm, new { @class = "form-control", autocomplete = "off" })
+                @Html.ValidationMessageFor(u => u.PasswordConfirm, "", new { @class = "invalid-feedback" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.DateOfBirth, new { @class = "text-left" })
+                @Html.TextBoxFor(u => u.DateOfBirth, new { @class = "form-control", autocomplete = "off", type = "date" })
+                @Html.ValidationMessageFor(u => u.DateOfBirth, "", new { @class = "invalid-feedback" })
+            </div>
+            <div class="form-group col-6">
+                @Html.LabelFor(u => u.PhoneNumber, new { @class = "text-left" })
+                @Html.TextBoxFor(u => u.PhoneNumber, new { @class = "form-control", autocomplete = "off", type = "tel" })
+                @Html.ValidationMessageFor(u => u.PhoneNumber, "", new { @class = "invalid-feedback" })
+            </div>
+        </div>
+
+        <button class="btn btn-lg btn-success btn-block" type="submit">Sign up</button>
+        <p class="mt-4 mb-2 text-muted text-center">Shop &copy; @DateTime.Now.Year</p>
+    }
+</body>
+</html>
+
+<script>
+    $(".input-validation-error").addClass("is-invalid");
+    $(".validation-summary-errors").addClass("alert alert-danger");
+    $(".validation-summary-errors ul").addClass("m-0 text-left")
+        .css("padding", "5px");
+</script>
+

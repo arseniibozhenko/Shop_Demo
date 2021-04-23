@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.IP = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.ServerVariables["REMOTE_ADDR"];
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Shop</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <!-- jQuery and bootstrap-->
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <link href="~/Images/favicon.ico" rel="icon" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top mynavbar">
+        <div class="container">
+            <a class="navbar-brand" href="~/Home/Index">
+                <img src="~/Images/logo.png" width="30" height="30"/>
+                Shop
+            </a>
+            @*@Html.ActionLink("Shop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item @(ViewBag.Title == "Goods" ? "active" : "")">
+                        <a class="nav-link" href="~/Goods/Index">Goods</a>
+                    </li>
+                    <li class="nav-item @(ViewBag.Title == "Manufacturers" ? "active" : "")">
+                        <a class="nav-link" href="~/Manufacturers/Index">Manufacturers</a>
+                    </li>
+                    <li class="nav-item @(ViewBag.Title == "Categories" ? "active" : "")">
+                        <a class="nav-link" href="~/Categories/Index">Categories</a>
+                    </li>
+                    <li class="nav-item @(ViewBag.Title == "Photos" ? "active" : "")">
+                        <a class="nav-link" href="~/Photos/Index">Photos</a>
+                    </li>
+                    <li class="nav-item @(ViewBag.Title == "Sales" ? "active" : "")">
+                        <a class="nav-link" href="~/Home/Sales">Sales</a>
+                    </li>
+                    <li class="nav-item @(ViewBag.Title == "SalePoses" ? "active" : "")">
+                        <a class="nav-link" href="~/Home/SalePoses">SalePoses</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Log in", "Login", "Auth", null, new { @class = "btn login_button shadow-sm" })
+                        @:&nbsp;
+                        @Html.ActionLink("Sign up", "Register", "Auth", null, new { @class = "btn signup_button shadow-sm" })
+                    }
+                    else
+                    {
+                        <div style="text-shadow: 0px 0px 2px black; color:red;" class="text-light mr-3">
+                            Hello, <span class="font-weight-bold" style="color: @(User.IsInRole("Admin") ? "red;" : "lightgreen;")">@User.Identity.Name</span>
+                        </div>
+                        @*@:&nbsp;&nbsp;*@
+                        @Html.ActionLink("Log out", "Logout", "Auth", null, new { @class = "btn btn-outline-light" })
+                    }
+
+                    @*<input class="form-control mr-sm-2 shadow" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success my-2 my-sm-0 shadow" type="submit">Search</button>*@
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+    <footer>
+        <hr />
+        <p class="text-center">Copyright &copy; Shop - Kyiv, @DateTime.Now.Year</p>
+    </footer>
+    @*<script src="~/Scripts/Script.js"></script>*@
+</body>
+</html>

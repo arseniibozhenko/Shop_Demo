@@ -1,0 +1,57 @@
+﻿@using Shop_Demo.ViewModels;
+@model GoodsViewModel
+
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content shadow">
+        @using (Html.BeginForm("Index", "Goods", FormMethod.Post))
+        {
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">Filter goods </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.Label("Sort")
+                    @Html.DropDownListFor(g => g.SortItem, Model.SortItems as SelectList, "No sort", new { @class = "form-control custom-select" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Manufacturer")
+                    @Html.DropDownListFor(g => g.ManufacturerId, Model.Manufacturers as SelectList, "All manufacturers", new { @class = "form-control custom-select" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Category")
+                    @Html.DropDownListFor(g => g.CategoryId, Model.Categories as SelectList, "All categories", new { @class = "form-control custom-select" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Price")
+                    <div class="form-row ml-0 mr-0">
+                        @Html.TextBoxFor(g => g.PriceFilter.From, new { @class = "form-control col-5 text-center", id = "from" })
+                        <span class="col-2 text-center align-self-center">&mdash;</span>
+                        @Html.TextBoxFor(g => g.PriceFilter.To, new { @class = "form-control col-5 text-center", id = "to" })
+                    </div>
+                </div>
+                <div id="slider_range"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="Filter" class="btn btn-warning" />
+            </div>
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script>
+    $("#slider_range").slider({
+        range: true,
+        min: @Model.PriceFilter.Min,
+        max: @Model.PriceFilter.Max,
+        values: [@Model.PriceFilter.From, @Model.PriceFilter.To],
+        slide: function (event, ui) {
+            $("#from").val(ui.values[0]);
+            $("#to").val(ui.values[1]);
+        }
+    });
+</script>

@@ -1,0 +1,70 @@
+﻿@using Shop_Demo.Models;
+@model LoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Login - Shop</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Login.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <!-- jQuery and bootstrap-->
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <link href="~/Images/favicon.ico" rel="icon" />
+</head>
+<body class="text-center">
+    @using (Html.BeginForm("Login", "Auth", FormMethod.Post, new { @class = "form-signin" }))
+    {
+        @*@Html.AntiForgeryToken()*@
+
+        <img class="mb-4 shadow-sm rounded-circle" src="~/Images/logo.png" alt="" width="75" height="75">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+        if (ViewData.ModelState[""]?.Errors.Count > 0)
+        {
+            @Html.ValidationSummary(true)
+        }
+        <div class="form-group">
+            @Html.LabelFor(u => u.Email, new { @class = "sr-only" })
+            @Html.TextBoxFor(u => u.Email, new { @class = "form-control", placeholder = "Email", autocomplete = "off", autofocus = "autofocus" })
+            @Html.ValidationMessageFor(u => u.Email, "", new { @class = "invalid-feedback" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(u => u.Password, new { @class = "sr-only" })
+            @Html.PasswordFor(u => u.Password, new { @class = "form-control", placeholder = "Password" })
+            @Html.ValidationMessageFor(u => u.Password, "", new { @class = "invalid-feedback" })
+        </div>
+        <div class="form-group">
+            <label>
+                @Html.CheckBoxFor(u => u.IsPersistent)
+                Remember me
+            </label>
+        </div>
+        @Html.HiddenFor(u => u.ReturnUrl)
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        @Html.ActionLink("Sign up", "Register", "Auth", null, new { @class = "btn btn-lg btn-info btn-block" })
+        <p class="mt-4 mb-2 text-muted">Shop &copy; @DateTime.Now.Year</p>
+    }
+</body>
+</html>
+
+<script>
+    $(".input-validation-error").addClass("is-invalid");
+    $(".validation-summary-errors").addClass("alert alert-danger");
+    $(".validation-summary-errors ul").addClass("m-0 text-left")
+                                      .css("padding", "5px");
+</script>
+

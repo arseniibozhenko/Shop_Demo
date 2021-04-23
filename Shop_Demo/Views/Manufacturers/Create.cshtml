@@ -1,0 +1,30 @@
+﻿@using Shop_Demo.ViewModels;
+@model ManufacturerViewModel
+
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content shadow">
+        @using (Html.BeginForm("Create", "Manufacturers", FormMethod.Post))
+        {
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">@(ViewBag.Id == 0 ? "Add" : "Edit") manufacturer </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.ManufacturerId)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ManufacturerName)
+                    @Html.TextBoxFor(m => m.ManufacturerName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="@(ViewBag.Id == 0 ? "Add" : "Edit")" class="btn @(ViewBag.Id == 0 ? "btn-success" : "btn-info")" />
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,29 @@
+﻿@using Shop_Demo.ViewModels;
+@model GoodViewModel
+
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow">
+        @using (Html.BeginForm("Remove", "Goods", FormMethod.Post))
+        {
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">Delete good </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span class="font-weight-bolder">Do you really want to delete the good ?</span><br /><br />
+                ID = @Model.GoodId<br />
+                Name = @Model.GoodName<br />
+                Manufacturer = @(Model.Manufacturer == null ? "No data" : Model.Manufacturer.ManufacturerName)<br />
+                Category = @(Model.Category == null ? "No data" : Model.Category.CategoryName)<br />
+                Price = @Model.Price<br />
+                GoodCount = @Model.GoodCount<br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="Delete" class="btn btn-danger"/>
+            </div>
+        }
+    </div>
+</div>

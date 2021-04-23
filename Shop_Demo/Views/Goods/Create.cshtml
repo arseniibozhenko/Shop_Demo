@@ -1,0 +1,72 @@
+﻿@using Shop_Demo.ViewModels;
+@model GoodCreateEditViewModel
+
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content shadow">
+        @using (Html.BeginForm("Create", "Goods", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-header bg-light">
+                <h5 class="modal-title font-weight-bold">@(ViewBag.Id == 0 ? "Add" : "Edit") good </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.HiddenFor(g => g.GoodId)
+                </div>
+                <div class="form-group">
+                    @Html.Label("Photo")
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label for="photoUpload" class="btn btn-primary">
+                                Browse
+                                <span id="filesCount" class="badge badge-light">0</span>
+                            </label>
+                            <input type="file" id="photoUpload" class="form-control-file" name="photoUpload" multiple accept="image/*" style="display: none" />
+                        </div>
+                        <input type="text" id="fileNames" class="form-control" placeholder="Choose image" readonly style="background-color: transparent" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(g => g.GoodName)
+                    @Html.TextBoxFor(g => g.GoodName, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Manufacturer")
+                    @Html.DropDownListFor(g => g.ManufacturerId, Model.Manufacturers as SelectList, "Select manufacturer", new { @class = "form-control custom-select" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Category")
+                    @Html.DropDownListFor(g => g.CategoryId, Model.Categories as SelectList, "Select category", new { @class = "form-control custom-select" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(g => g.Price)
+                    @Html.TextBoxFor(g => g.Price, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(g => g.GoodCount)
+                    @Html.TextBoxFor(g => g.GoodCount, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" value="@(ViewBag.Id == 0 ? "Add" : "Edit")" class="btn @(ViewBag.Id == 0 ? "btn-success" : "btn-info")" />
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $("#photoUpload").on("change", (e) => {
+        let files = e.target.files;
+        let filenames = [];
+
+        for (let file of files) {
+            filenames.push(file.name);
+        }
+
+        $("#fileNames").val(filenames.join(", "));
+        $("#filesCount").html(filenames.length);
+    });
+</script>
